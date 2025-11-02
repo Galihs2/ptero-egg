@@ -4,36 +4,36 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2023-04-01T12:00:00+07:00",
-    "name": "Egg WhatsApp Bot",
-    "author": "major@onedev.eu.org",
-    "description": "This is a Pterodactyl egg to run Nodejs WhatsApp Bot. The requirements such as ffmpeg, imagemagick, pm2, and so on have been installed.",
+    "exported_at": "2025-11-02T12:00:00+07:00",
+    "name": "XMPanels WhatsApp Bot",
+    "author": "Galihs2 | Modified by XMPanels",
+    "description": "XMPanels Pterodactyl egg untuk menjalankan WhatsApp Bot dengan Nodejs. Sudah terinstall ffmpeg, imagemagick, pm2, dan kebutuhan bot lainnya. Dilengkapi dengan tampilan console XMPanels yang menarik.",
     "features": null,
     "docker_images": {
-        "Stable (Recommeded)": "ghcr.io\/mydapitt\/node:stable",
-        "Nodejs 21": "docker.io\/dapitt00\/node:21",
-        "Nodejs 20": "docker.io\/dapitt00\/node:20",
-        "Node 20 (Ubuntu)": "docker.io\/dapitt00\/node:20-ubuntu",
-        "Nodejs 19": "docker.io\/dapitt00\/node:19",
-        "Nodejs 18": "docker.io\/dapitt00\/node:18",
-        "Nodejs 18 (Slim)": "docker.io\/dapitt00\/node:18-slim",
-        "Nodejs 18 (Ubuntu)": "docker.io\/dapitt00\/node:18-ubuntu",
-        "Nodejs 17": "docker.io\/dapitt00\/node:17",
-        "Nodejs 16": "docker.io\/dapitt00\/node:16",
-        "Nodejs 14": "docker.io\/dapitt00\/node:14",
-        "Nodejs 12": "docker.io\/dapitt00\/node:12" 
+        "Stable (Recommended)": "ghcr.io/mydapitt/node:stable",
+        "Nodejs 21": "docker.io/dapitt00/node:21",
+        "Nodejs 20": "docker.io/dapitt00/node:20",
+        "Node 20 (Ubuntu)": "docker.io/dapitt00/node:20-ubuntu",
+        "Nodejs 19": "docker.io/dapitt00/node:19",
+        "Nodejs 18": "docker.io/dapitt00/node:18",
+        "Nodejs 18 (Slim)": "docker.io/dapitt00/node:18-slim",
+        "Nodejs 18 (Ubuntu)": "docker.io/dapitt00/node:18-ubuntu",
+        "Nodejs 17": "docker.io/dapitt00/node:17",
+        "Nodejs 16": "docker.io/dapitt00/node:16",
+        "Nodejs 14": "docker.io/dapitt00/node:14",
+        "Nodejs 12": "docker.io/dapitt00/node:12" 
     },
     "file_denylist": [],
-    "startup": "{{STARTUP_CMD}}",
+    "startup": "if [ -f ~/.config/neofetch/config.conf ]; then neofetch; fi && {{STARTUP_CMD}}",
     "config": {
         "files": "{}",
-        "startup": "{\r\n    \"done\": [\r\n        \"change this text 1\",\r\n        \"change this text 2\"\r\n    ]\r\n}",
+        "startup": "{\r\n    \"done\": [\r\n        \"XMPanels Private Server\",\r\n        \"Silahkan masukan perintah\"\r\n    ]\r\n}",
         "logs": "{}",
         "stop": "^^C"
     },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/bash\r\n# NodeJS App Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\napt update\r\napt install -y git curl jq file unzip make gcc g++ python python-dev libtool\r\ncurl https:\/\/raw.githubusercontent.com\/Mark-HDR\/info-panel\/main\/run.js > run.js\r\n\r\necho -e \"updating npm. please wait...\"\r\nnpm install npm@latest -g\r\n\r\nmkdir -p \/mnt\/server\r\ncd \/mnt\/server\r\n\r\nif [ \"${USER_UPLOAD}\" == \"true\" ] || [ \"${USER_UPLOAD}\" == \"1\" ]; then\r\n    echo -e \"assuming user knows what they are doing have a good day.\"\r\n    exit 0\r\nfi\r\n\r\n## add git ending if it's not on the address\r\nif [[ ${GIT_ADDRESS} != *.git ]]; then\r\n    GIT_ADDRESS=${GIT_ADDRESS}.git\r\nfi\r\n\r\nif [ -z \"${USERNAME}\" ] && [ -z \"${ACCESS_TOKEN}\" ]; then\r\n    echo -e \"using anon api call\"\r\nelse\r\n    GIT_ADDRESS=\"https:\/\/${USERNAME}:${ACCESS_TOKEN}@$(echo -e ${GIT_ADDRESS} | cut -d\/ -f3-)\"\r\nfi\r\n\r\n## pull git js repo\r\nif [ \"$(ls -A \/mnt\/server)\" ]; then\r\n    echo -e \"\/mnt\/server directory is not empty.\"\r\n    if [ -d .git ]; then\r\n        echo -e \".git directory exists\"\r\n        if [ -f .git\/config ]; then\r\n            echo -e \"loading info from git config\"\r\n            ORIGIN=$(git config --get remote.origin.url)\r\n        else\r\n            echo -e \"files found with no git config\"\r\n            echo -e \"closing out without touching things to not break anything\"\r\n            exit 10\r\n        fi\r\n    fi\r\n\r\n    if [ \"${ORIGIN}\" == \"${GIT_ADDRESS}\" ]; then\r\n        echo \"pulling latest from github\"\r\n        git pull\r\n    fi\r\nelse\r\n    echo -e \"\/mnt\/server is empty.\\ncloning files into repo\"\r\n    if [ -z ${BRANCH} ]; then\r\n        echo -e \"cloning default branch\"\r\n        git clone ${GIT_ADDRESS} .\r\n    else\r\n        echo -e \"cloning ${BRANCH}'\"\r\n        git clone --single-branch --branch ${BRANCH} ${GIT_ADDRESS} .\r\n    fi\r\n\r\nfi\r\n\r\necho \"Installing nodejs packages\"\r\nif [[ ! -z ${NODE_PACKAGES} ]]; then\r\n    \/usr\/local\/bin\/npm install ${NODE_PACKAGES}\r\nfi\r\n\r\nif [ -f \/mnt\/server\/package.json ]; then\r\n    \/usr\/local\/bin\/npm install --production\r\nfi\r\n\r\necho -e \"install complete\"\r\nexit 0",
+            "script": "#!/bin/bash\r\n# XMPanels NodeJS App Installation Script\r\n#\r\n# Server Files: /mnt/server\r\n\r\nRED='\\033[0;31m'\r\nGREEN='\\033[0;32m'\r\nYELLOW='\\033[1;33m'\r\nBLUE='\\033[0;34m'\r\nNC='\\033[0m' # No Color\r\n\r\necho -e \"${BLUE}================================${NC}\"\r\necho -e \"${GREEN}  XMPanels Installation Script${NC}\"\r\necho -e \"${BLUE}================================${NC}\"\r\n\r\n# Update and install dependencies\r\necho -e \"${YELLOW}[1/6] Installing system dependencies...${NC}\"\r\napt update\r\napt install -y git curl jq file unzip make gcc g++ python3 python3-dev libtool neofetch\r\n\r\n# Install npm latest\r\necho -e \"${YELLOW}[2/6] Updating npm...${NC}\"\r\nnpm install npm@latest -g\r\n\r\n# Create server directory\r\nmkdir -p /mnt/server\r\ncd /mnt/server\r\n\r\n# Setup XMPanels Neofetch Config\r\necho -e \"${YELLOW}[3/6] Installing XMPanels console theme...${NC}\"\r\nmkdir -p ~/.config/neofetch\r\ncurl -sSL https://raw.githubusercontent.com/Galihs2/ptero-egg/master/xmpanels-neofetch.conf -o ~/.config/neofetch/config.conf\r\n\r\nif [ -f ~/.config/neofetch/config.conf ]; then\r\n    echo -e \"${GREEN}✓ XMPanels console theme installed successfully${NC}\"\r\nelse\r\n    echo -e \"${RED}✗ Failed to install XMPanels console theme${NC}\"\r\nfi\r\n\r\n# Download run.js helper\r\ncurl -sSL https://raw.githubusercontent.com/Mark-HDR/info-panel/main/run.js > run.js 2>/dev/null || echo -e \"${YELLOW}Warning: run.js not downloaded${NC}\"\r\n\r\necho -e \"${YELLOW}[4/6] Cloning repository...${NC}\"\r\n\r\n# Check if user wants to upload manually\r\nif [ \"${USER_UPLOAD}\" == \"true\" ] || [ \"${USER_UPLOAD}\" == \"1\" ]; then\r\n    echo -e \"${GREEN}Manual upload mode enabled. Skipping git clone.${NC}\"\r\n    exit 0\r\nfi\r\n\r\n## Add git ending if it's not on the address\r\nif [[ ${GIT_ADDRESS} != *.git ]]; then\r\n    GIT_ADDRESS=${GIT_ADDRESS}.git\r\nfi\r\n\r\n## Setup authentication if provided\r\nif [ -z \"${USERNAME}\" ] && [ -z \"${ACCESS_TOKEN}\" ]; then\r\n    echo -e \"${BLUE}Using anonymous git clone${NC}\"\r\nelse\r\n    GIT_ADDRESS=\"https://${USERNAME}:${ACCESS_TOKEN}@$(echo -e ${GIT_ADDRESS} | cut -d/ -f3-)\"\r\nfi\r\n\r\n## Pull git repo\r\nif [ \"$(ls -A /mnt/server)\" ]; then\r\n    echo -e \"${YELLOW}/mnt/server directory is not empty.${NC}\"\r\n    if [ -d .git ]; then\r\n        echo -e \"${BLUE}.git directory exists${NC}\"\r\n        if [ -f .git/config ]; then\r\n            echo -e \"${BLUE}Loading info from git config${NC}\"\r\n            ORIGIN=$(git config --get remote.origin.url)\r\n        else\r\n            echo -e \"${RED}Files found with no git config${NC}\"\r\n            echo -e \"${RED}Exiting to avoid breaking anything${NC}\"\r\n            exit 10\r\n        fi\r\n    fi\r\n\r\n    if [ \"${ORIGIN}\" == \"${GIT_ADDRESS}\" ]; then\r\n        echo -e \"${GREEN}Pulling latest from repository${NC}\"\r\n        git pull\r\n    fi\r\nelse\r\n    echo -e \"${BLUE}/mnt/server is empty. Cloning repository...${NC}\"\r\n    if [ -z ${BRANCH} ]; then\r\n        echo -e \"${BLUE}Cloning default branch${NC}\"\r\n        git clone ${GIT_ADDRESS} .\r\n    else\r\n        echo -e \"${BLUE}Cloning branch: ${BRANCH}${NC}\"\r\n        git clone --single-branch --branch ${BRANCH} ${GIT_ADDRESS} .\r\n    fi\r\nfi\r\n\r\necho -e \"${YELLOW}[5/6] Installing Node.js packages...${NC}\"\r\nif [[ ! -z ${NODE_PACKAGES} ]]; then\r\n    /usr/local/bin/npm install ${NODE_PACKAGES}\r\nfi\r\n\r\nif [ -f /mnt/server/package.json ]; then\r\n    /usr/local/bin/npm install --production\r\nfi\r\n\r\necho -e \"${YELLOW}[6/6] Finalizing installation...${NC}\"\r\necho -e \"${BLUE}================================${NC}\"\r\necho -e \"${GREEN}✓ Installation complete!${NC}\"\r\necho -e \"${BLUE}================================${NC}\"\r\necho -e \"${GREEN}XMPanels console theme is ready!${NC}\"\r\necho -e \"${YELLOW}Start your server to see the custom console.${NC}\"\r\necho -e \"${BLUE}================================${NC}\"\r\nexit 0",
             "container": "node:lts-bullseye-slim",
             "entrypoint": "bash"
         }
@@ -41,12 +41,72 @@
     "variables": [
         {
             "name": "Startup Command",
-            "description": "Put your startup command here.",
+            "description": "Perintah startup untuk menjalankan bot Anda. Contoh: npm start, node index.js, pm2 start index.js",
             "env_variable": "STARTUP_CMD",
-            "default_value": "node run.js",
+            "default_value": "npm start",
             "user_viewable": true,
             "user_editable": true,
-            "rules": "required|string|max:45",
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        },
+        {
+            "name": "Git Repository",
+            "description": "URL repository GitHub bot WhatsApp Anda. Contoh: https://github.com/username/repo",
+            "env_variable": "GIT_ADDRESS",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Git Branch",
+            "description": "Branch yang akan di-clone. Kosongkan untuk menggunakan branch default.",
+            "env_variable": "BRANCH",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "User Upload",
+            "description": "Set ke 'true' jika Anda ingin upload file manual tanpa git clone.",
+            "env_variable": "USER_UPLOAD",
+            "default_value": "false",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|in:true,false",
+            "field_type": "text"
+        },
+        {
+            "name": "GitHub Username",
+            "description": "Username GitHub untuk private repository (opsional)",
+            "env_variable": "USERNAME",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "GitHub Access Token",
+            "description": "Personal Access Token untuk private repository (opsional)",
+            "env_variable": "ACCESS_TOKEN",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Additional Node Packages",
+            "description": "NPM packages tambahan yang ingin diinstall (pisahkan dengan spasi). Contoh: axios express",
+            "env_variable": "NODE_PACKAGES",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
             "field_type": "text"
         }
     ]
